@@ -1,9 +1,8 @@
-import { Box, HStack, Text } from '@chakra-ui/react'
-import Form from '../components/Form'
-import PhotoArea from '../components/PhotoArea'
+import { Box, HStack, Text, Image, Button, Input } from '@chakra-ui/react'
+import React from 'react';
+import Form from '../components/Form';
 
 export default function Login() {
-  const username = 'jessicacordeiro'
 
   return (
     <Box 
@@ -15,18 +14,14 @@ export default function Login() {
         display='flex'
         alignItems='center'
         justifyContent='space-between'
-        flexDirection={"xs" ? 'column' : 'row'}
         w='100%'
-        maxW='600'
+        maxW='550'
         borderRadius='10'
         p='32'
         m='16'
         bgColor='#A44681'
       >
-        <HStack>
-          <Form /> 
-          <PhotoArea />
-        </HStack>
+      <Form />
       </Box>
     </Box>
   )
