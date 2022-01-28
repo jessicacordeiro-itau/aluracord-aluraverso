@@ -1,4 +1,4 @@
-import { Box, Button, Input, Text, Image, HStack, Alert, AlertIcon} from "@chakra-ui/react";
+import { Box, Button, Input, Text, Image, HStack} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -35,6 +35,7 @@ export default function Form() {
 
             <Input
                 h="50"
+                border='0'
                 textAlign='center'
                 bgColor='#DFFFF4'
                 borderRadius='10'
