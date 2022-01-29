@@ -1,6 +1,9 @@
 import { Box, Button, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export default function Header() {
+    const router = useRouter();
+    
     return(
         <Box 
             display='flex'
@@ -29,6 +32,9 @@ export default function Header() {
                textColor='#DFFFF4'
                fontSize='20'
                fontWeight='bold'
+               onClick={() =>{
+                    router.push('/')
+               }}
             >
                 Logout
             </Button>       
