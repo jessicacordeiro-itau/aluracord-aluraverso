@@ -9,13 +9,13 @@ export interface NewMessage {
     words: string
 }
 
-export function Chat({id, user, words}: NewMessage) {
-    const [message, setMessage] = React.useState('')
+export default function Chat({id, user}: NewMessage) {
+    const [message, setMessage] = React.useState<string>('')
     const [messageList, setMessageList] = React.useState<NewMessage[]>([])
 
     const handleNewMessage = () => {
         setMessageList([
-            message,
+            {id:messageList.length +1, user:'jessicacordeiro', words:message},
             ...messageList,
             
         ]) 
@@ -77,13 +77,13 @@ export function Chat({id, user, words}: NewMessage) {
                         p='10'
                         value={message}
                         onChange={(event) => {
-                            const value = event.target.value
-                            setMessage(value)
+                            const valor = event.target.value
+                            setMessage(valor)
                         }}
                         onKeyPress={(event) => {
                             if(event.key === 'Enter') {
                                 event.preventDefault()
-                                handleNewMessage{message}
+                                handleNewMessage()
                             }
                         }}
                     />
@@ -98,8 +98,10 @@ export function Chat({id, user, words}: NewMessage) {
                         borderRadius='10'
                         textColor='#DFFFF4'
                         fontSize='20'
-                        onClick={() => {
-                            handleNewMessage{message}
+                        value={message}
+                        onClick={(event) => {
+                            event.preventDefault()
+                            handleNewMessage()
                         }}
                     >
                         ok
