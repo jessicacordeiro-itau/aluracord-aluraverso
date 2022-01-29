@@ -71,7 +71,7 @@ export default function Chat({id, user}: NewMessage) {
                         color='#452F70'
                         mr='12'
                         h="50"
-                        fontSize='20'
+                        fontSize='16'
                         mb='10'
                         mt='10'
                         p='10'
