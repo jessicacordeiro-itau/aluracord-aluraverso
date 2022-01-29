@@ -19,18 +19,19 @@ export default function Form() {
             
         >
             <Text 
-                fontSize='28'
+                fontSize='25'
                 color='#DFFFF4'
+                fontWeight='bold'
+                letterSpacing='0.2em'
             >
-                Boas vindas de volta!
+                Boas vindas!
             </Text>
             <Text
                 mt='10'
                 color='#DFFFF4'
-                fontSize='25'
-                letterSpacing='0.4em'
+                fontSize='14'
             >
-                AluraVerso
+                AluraCord 💙 | AluraVerso
             </Text>
 
             <Input
@@ -43,6 +44,7 @@ export default function Form() {
                 placeholder="Github UserName"
                 mb='10'
                 mt='60'
+                fontFamily='monospace'
                 value={username}
                 onChange={(event) => {
                     const valor = event.target.value
@@ -60,6 +62,8 @@ export default function Form() {
                 borderRadius='10'
                 textColor='#DFFFF4'
                 fontSize='20'
+                fontFamily='monospace'
+                fontWeight='bold'
                 onClick={(event) => {
                     event.preventDefault();
                     {username.length > 2 ? router.push('/chat') : alert('Usuário inválido digite novamente!')};
@@ -89,6 +93,7 @@ export default function Form() {
             <Text
                 textColor='#DFFFF4'
                 ml='30'
+                fontWeight='bold'
             >
                 {username.length > 2 ? `${username}` : '@usuário'}
             </Text>

@@ -32,6 +32,7 @@ export default function Header() {
                textColor='#DFFFF4'
                fontSize='20'
                fontWeight='bold'
+               fontFamily='monospace'
                onClick={() =>{
                     router.push('/')
                }}

@@ -75,6 +75,7 @@ export default function Chat({id, user}: NewMessage) {
                         mb='10'
                         mt='10'
                         p='10'
+                        fontFamily='monospace'
                         value={message}
                         onChange={(event) => {
                             const valor = event.target.value
@@ -89,22 +90,24 @@ export default function Chat({id, user}: NewMessage) {
                     />
                     <Button 
                         variant='solid'
-                        h='50px'
-                        w='80px' 
+                        h='52px'
+                        w='100px' 
                         mt='5'
                         type='submit'
                         border='none'
                         bgColor='#452F70'
                         borderRadius='10'
                         textColor='#DFFFF4'
-                        fontSize='20'
+                        fontSize='18'
+                        fontWeight='bold'
+                        fontFamily='monospace'
                         value={message}
                         onClick={(event) => {
                             event.preventDefault()
                             handleNewMessage()
                         }}
                     >
-                        ok
+                        Enviar
                     </Button>
                     </Box>
                 </HStack>  
