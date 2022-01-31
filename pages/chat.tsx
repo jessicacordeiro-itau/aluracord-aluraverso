@@ -1,25 +1,48 @@
 import { Box, Button, HStack, Input} from "@chakra-ui/react"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Header from "../components/Header"
 import MessageList from "../components/MessageList"
+import { createClient, SupabaseClient } from "@supabase/supabase-js"
+
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzU4NjE0NSwiZXhwIjoxOTU5MTYyMTQ1fQ.RxJf-FrqKWlhD4K637uuDQS1zh5EMGvYdTXY4GX5jGE'
+const SUPABASE_URL = 'https://vyjfhrdemfdfxdpguhur.supabase.co'
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 export interface NewMessage {
-    id: number
+    id?: number
     user: string
     words: string
 }
 
-export default function Chat({id, user}: NewMessage) {
-    const [message, setMessage] = React.useState<string>('')
-    const [messageList, setMessageList] = React.useState<NewMessage[]>([])
+export default function Chat({user}: NewMessage) {
+    const [message, setMessage] = useState<string>('')
+    const [messageList, setMessageList] = useState<NewMessage[]>([])
 
-    const handleNewMessage = () => {
+    useEffect(() => {
+        async function findAll() {
+            const { data } = await supabaseClient
+                .from<NewMessage>('messages')
+                .select()
+                .order('id', {ascending: false})
+
+            setMessageList(data as NewMessage[])
+        }
+
+        findAll();
+    }, [])
+
+    async function handleNewMessage() {
+        const { data: texts } = await supabaseClient
+            .from<NewMessage>('messages')
+            .insert([
+                {user:'jessicacordeiro', words:message}
+            ])
+
         setMessageList([
-            {id:messageList.length +1, user:'jessicacordeiro', words:message},
-            ...messageList,
-            
-        ]) 
-        setMessage('')
+            texts[0],
+            ...messageList                    
+        ])    
+        setMessage('')  
     }
 
     return(

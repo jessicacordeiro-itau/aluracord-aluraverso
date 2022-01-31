@@ -9,7 +9,6 @@ interface NewProps {
 
 export default function MessageList(props: NewProps) {
     const { messages } = props
-    const [username] = React.useState('jessicacordeiro');
 
     return(
             <Box
@@ -23,7 +22,7 @@ export default function MessageList(props: NewProps) {
             >
                 {props.messages.map((message) => (
                     <Box
-                        key={message?.id}
+                        key={message.id}
                         tag='li'
                         borderRadius='5'
                         p='5'
@@ -35,7 +34,7 @@ export default function MessageList(props: NewProps) {
                                 borderRadius='50%'
                                 display='inline-block'
                                 mr='8'
-                                src={`https://github.com/${username}.png`}
+                                src={`https://github.com/${message.user}.png`}
                             />
                             <Text 
                                 fontSize='18' 
