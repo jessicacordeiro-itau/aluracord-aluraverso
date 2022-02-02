@@ -30,8 +30,8 @@ Esta aplicação é um projeto desenvolvido na Imersão React, evento organizado
   💻 Desktop 💻
 </h3>
 <p align="center" justify="">
-    <Img src="https://i.imgur.com/ijUluxI.png" width=400> &nbsp; &nbsp;
-    <Img src="https://i.imgur.com/9VBJe7q.png" width=400>
+    <Img src="https://i.imgur.com/ijUluxI.png" width=300> &nbsp; &nbsp;
+    <Img src="https://i.imgur.com/9VBJe7q.png" width=300>
 </p>
 
 ## Back-end :card_file_box:
