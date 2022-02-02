@@ -1,55 +1,68 @@
-import { Box, Button, HStack, Input} from "@chakra-ui/react"
+import { Box, Button, HStack, Input } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import Header from "../components/Header"
 import MessageList from "../components/MessageList"
-import { createClient, SupabaseClient } from "@supabase/supabase-js"
-import { v4 as uuidv4 } from 'uuid'
+import { createClient } from "@supabase/supabase-js"
+import { useRouter } from "next/router"
+import ButtonSticker from "../components/ButtonSticker"
 
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzYwNDY0MywiZXhwIjoxOTU5MTgwNjQzfQ.9XYOa_h6KfLfCqIxvKIM5E49H4pzvHSK84W98JE4Rao'
-const SUPABASE_URL = 'https://kdjaewmnhutebpeykipj.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzY2MDc0OSwiZXhwIjoxOTU5MjM2NzQ5fQ.eX_4YvPoxnTb-dBwFmIH-Ug_3oT4-K7qL4gsSb6CIus'
+const SUPABASE_URL = 'https://bucvlkylcznnntccgzfu.supabase.co'
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
+
 export interface NewMessage {
-    id: string
-    user: string
+    id: number
     words: string
+    user: string
 }
 
-export default function Chat({user}: NewMessage) {
-    const [message, setMessage] = useState<string>('')
+export default function Chat() {
+    const router = useRouter();
+    const user = router.query.username
+
+    const [message, setMessage] = useState('')
     const [messageList, setMessageList] = useState<NewMessage[]>([])
-    const id = uuidv4()
+
+    async function getMessages() {
+        const supabaseData = await supabaseClient
+            .from('messages')
+            .select('*')
+            .order('id', {ascending: false})
+
+        setMessageList(supabaseData.data as NewMessage[])    
+    }
+
+
+    async function messagesRealTime(addMessage: (message: NewMessage) => void) {
+        supabaseClient
+            .from('messages')
+            .on('INSERT', (response) => {
+                addMessage(response.new as NewMessage)
+            })
+            .subscribe()
+    }
 
     useEffect(() => {
-        async function findAll() {
-            const { data } = await supabaseClient
-                .from<NewMessage>('messages')
-                .select('*')
-                .order('id', {ascending: true})
-
-            setMessageList(data as NewMessage[])
-        }
-
-        findAll();
+        getMessages()
+        messagesRealTime((message) => {
+            setMessageList((currentListMessages) => {
+                return [message, ...currentListMessages]
+            })
+        })
+       
     }, [])
 
-    async function handleNewMessage() {
-        const texts: NewMessage = {
-            id,  user:'jessicacordeiro', words:message
-        } 
-        
-        await supabaseClient
-            .from<NewMessage>('messages')
+    async function handleNewMessage(newWords: string) {
+        const response = await supabaseClient
+            .from('messages')
             .insert([
-                texts
+                {user, words: newWords}
             ])
-
-        setMessageList([
-            texts,
-            ...messageList                    
-        ])    
-        setMessage('')  
+        
+        setMessage('')
     }
+       
 
     return(
         <Box 
@@ -65,8 +78,8 @@ export default function Chat({user}: NewMessage) {
                 borderRadius='5'
                 bgColor='#A44681'
                 h='100%'
-                maxW='95%'
-                maxH='95vh'
+                maxW='90%'
+                maxH='90vh'
                 p='32'
             >
             <Header />
@@ -107,33 +120,39 @@ export default function Chat({user}: NewMessage) {
                         fontFamily='monospace'
                         value={message}
                         onChange={(event) => {
-                            const valor = event.target.value
-                            setMessage(valor)
+                            setMessage(event.target.value)
                         }}
                         onKeyPress={(event) => {
                             if(event.key === 'Enter') {
                                 event.preventDefault()
-                                handleNewMessage()
+                                handleNewMessage(message)
                             }
+                        }}
+                    />
+                    <ButtonSticker 
+                        onStickerClick={(sticker) => {
+                            console.log('foi porra', sticker)
+                            handleNewMessage(`:sticker: ${sticker}`)
                         }}
                     />
                     <Button 
                         variant='solid'
-                        h='52px'
-                        w='100px' 
+                        h='52'
+                        w='100'
                         mt='5'
+                        padding='10'
                         type='submit'
                         border='none'
                         bgColor='#452F70'
                         borderRadius='10'
                         textColor='#DFFFF4'
-                        fontSize='18'
+                        fontSize='20'
                         fontWeight='bold'
                         fontFamily='monospace'
                         value={message}
                         onClick={(event) => {
                             event.preventDefault()
-                            handleNewMessage()
+                            handleNewMessage(message)
                         }}
                     >
                         Enviar

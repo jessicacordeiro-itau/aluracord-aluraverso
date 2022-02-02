@@ -1,14 +1,13 @@
-import { Box, Text, Image, HStack } from "@chakra-ui/react";
-import { imageConfigDefault } from "next/dist/server/image-config";
 import React from "react";
+import appConfig from '../../config.json'
+import { Box, Text, Image, HStack } from "@chakra-ui/react";
 import { NewMessage } from "../../pages/chat";
 
-interface NewProps {
+interface MessageListProps {
     messages: NewMessage[]
 }
 
-export default function MessageList(props: NewProps) {
-    const { messages } = props
+export default function MessageList({ messages } : MessageListProps) {
 
     return(
             <Box
@@ -17,31 +16,35 @@ export default function MessageList(props: NewProps) {
                 display='flex'
                 flexDirection='column-reverse'
                 flex='1'
-                color='452F70'
+                color='#452F70'
                 mb='16'
             >
-                {props.messages.map((message) => (
+                {messages.map((message) => (
                     <Box
                         key={message.id}
                         tag='li'
                         borderRadius='5'
-                        p='5'
-                        mb='5'
+                        padding='5'
+                        mb='12'
+                        _hover={{
+                            bgColor: '#D6EFE6'
+                        }}
                     >
-                        <HStack>
+                        <HStack m='10'>
                             <Image 
                                 maxH='35'
                                 borderRadius='50%'
                                 display='inline-block'
-                                mr='8'
+                                mr='5'
                                 src={`https://github.com/${message.user}.png`}
+                                alt='user'
                             />
                             <Text 
                                 fontSize='18' 
                                 textColor='#452F70' 
                                 fontWeight='bold'
                             >
-                                {message?.user}
+                                {message.user}
                             </Text>
                             <Text
                                 fontSize='12'
@@ -52,14 +55,14 @@ export default function MessageList(props: NewProps) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </HStack>
-                    <Text 
-                    m='10'
-
-                    >
-                        {message?.words}
-                    </Text>
-                   
-                </Box>
+                        {message.words.startsWith(':sticker:') ? (
+                            <Image maxH='200' src={message.words.replace(':sticker: ', '')} alt='sticker' />
+                        ) : (
+                            <Text m='10'>
+                                {message.words}
+                            </Text>
+                        )}
+                    </Box>
                 ))}
                 
         </Box>

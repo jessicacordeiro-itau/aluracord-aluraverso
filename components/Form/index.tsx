@@ -3,9 +3,8 @@ import { useRouter } from "next/router";
 import React from "react";
 
 export default function Form() {
-    
-    const [username, setUsername] = React.useState('');
     const router = useRouter();
+    const [username, setUsername] = React.useState('');
     
     return (
         <HStack>
@@ -45,6 +44,7 @@ export default function Form() {
                 mb='10'
                 mt='60'
                 fontFamily='monospace'
+                
                 value={username}
                 onChange={(event) => {
                     const valor = event.target.value
@@ -66,7 +66,7 @@ export default function Form() {
                 fontWeight='bold'
                 onClick={(event) => {
                     event.preventDefault();
-                    {username.length > 2 ? router.push('/chat') : alert('Usuário inválido digite novamente!')};
+                    {username.length > 2 ? router.push(`/chat?username=${username}`) : alert('Usuário inválido digite novamente!')};
                 }}
             >
                 Entrar
@@ -87,7 +87,8 @@ export default function Form() {
                 p=' 10'
                 borderRadius='50%'
                 mb='16'
-                src={username.length > 2 ? `https://github.com/${username}.png` : `https://i.imgur.com/vHQ3e42.png`} 
+                src={username.length > 2 ? `https://github.com/${username}.png` : `https://i.imgur.com/vHQ3e42.png`}
+                alt='user' 
                 
             />
             <Text
