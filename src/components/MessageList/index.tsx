@@ -1,5 +1,4 @@
 import React from "react";
-import appConfig from '../../config.json'
 import { Box, Text, Image, HStack } from "@chakra-ui/react";
 import { NewMessage } from "../../pages/chat";
 
