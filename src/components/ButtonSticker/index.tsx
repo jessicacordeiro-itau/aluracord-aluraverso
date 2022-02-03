@@ -12,23 +12,27 @@ export default function ButtonSticker({ onStickerClick } : ButtonStickerProps) {
     return (
         <Box
             position='relative'
+            zIndex='1'
         >
             <Button
-                borderRadius='5'
-                paddingLeft='1'
+                borderRadius='50'
+                position='absolute'
                 minW='50'
                 minH='50'
-                fontSize='30'
-                right='19'
+                paddingRight='10'
+                fontSize='28'
+                right='4'
+                bottom='-25'
                 lineHeight='0'
                 display='flex'
                 alignItems='center'
                 justifyContent='center'
                 bgColor= '#DFFFF4'
-                border='none' 
+                border='none'
+                cursor='pointer' 
                 onClick={() => setOpenState(!isOpen)}
             >
-                😋
+                😝
             </Button>
             {isOpen && (
                 <Box

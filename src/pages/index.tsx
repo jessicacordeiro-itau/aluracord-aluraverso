@@ -14,12 +14,12 @@ export default function Login() {
         display='flex'
         alignItems='center'
         justifyContent='space-between'
-        w='100%'
+        w='95%'
         maxW='550'
         borderRadius='10'
         p='32'
-        m='16'
         bgColor='#A44681'
+        boxShadow='10px 10px 25px #DFFFF4'
       >
       <Form />
       </Box>

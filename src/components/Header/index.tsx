@@ -23,16 +23,18 @@ export default function Header() {
             <Button
                variant='solid'
                h='48px'
-               w='250px' 
+               w='150px' 
                mt='5'
                type='submit'
                border='none'
                bgColor='#452F70'
+
                borderRadius='10'
                textColor='#DFFFF4'
                fontSize='20'
                fontWeight='bold'
                fontFamily='monospace'
+               cursor='pointer'
                onClick={() =>{
                     router.push('/')
                }}

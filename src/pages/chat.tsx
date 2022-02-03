@@ -10,8 +10,13 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5v
 const SUPABASE_URL = 'https://bucvlkylcznnntccgzfu.supabase.co'
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-
 export interface NewMessage {
+    id: number
+    words: string
+    user: string
+}
+
+export interface DeleteMessage {
     id: number
     words: string
     user: string
@@ -62,7 +67,23 @@ export default function Chat() {
         
         setMessage('')
     }
-       
+    
+    // iniciando a implementação do icone de deletar a msg
+
+    async function handleDeleteMessage(messageId: number) {
+        const response = await supabaseClient
+            .from('messages')
+            .delete()
+            .match(
+                { id: messageId }
+            )
+            let newMessageList = messageList.filter((message) => {
+                if(message.id != messageId) {
+                    return message
+                }
+            })
+        setMessageList([...newMessageList])
+    }
 
     return(
         <Box 
@@ -93,7 +114,9 @@ export default function Chat() {
                 borderRadius='5'
                 p='16'
             >
-                <MessageList messages={messageList}/>
+                <MessageList 
+                    messages={messageList} 
+                />
             </Box>
             <HStack>
                 <Box
@@ -101,6 +124,7 @@ export default function Chat() {
                     display='flex'
                     alignItems='center'
                     w='100%'
+                    mt='5'
                     
                 >
                     <Input 
@@ -108,7 +132,7 @@ export default function Chat() {
                         w='100%'
                         border='0'
                         resize='none'
-                        borderRadius='5'
+                        borderRadius='50'
                         bgColor='#DFFFF4'
                         color='#452F70'
                         mr='12'
@@ -116,7 +140,7 @@ export default function Chat() {
                         fontSize='16'
                         mb='10'
                         mt='10'
-                        p='10'
+                        paddingLeft='20'
                         fontFamily='monospace'
                         value={message}
                         onChange={(event) => {
@@ -137,25 +161,35 @@ export default function Chat() {
                     />
                     <Button 
                         variant='solid'
-                        h='52'
-                        w='100'
+                        h='55'
+                        w='3.8%'
                         mt='5'
+                        ml='3'
                         padding='10'
                         type='submit'
                         border='none'
                         bgColor='#452F70'
-                        borderRadius='10'
+                        opacity='0.5'
+                        borderRadius='50%'
                         textColor='#DFFFF4'
                         fontSize='20'
                         fontWeight='bold'
                         fontFamily='monospace'
+                        _hover={{
+                            bgColor: '#452F70',
+                            opacity: '1'
+                        }}
                         value={message}
                         onClick={(event) => {
                             event.preventDefault()
                             handleNewMessage(message)
                         }}
+                        cursor='pointer'
+                        bgImage='url(https://i.imgur.com/qmyZJi6.png)'
+                        backgroundRepeat= 'no-repeat' 
+                        backgroundSize= '40px 50px'
+                        backgroundPosition= 'center'
                     >
-                        Enviar
                     </Button>
                     </Box>
                 </HStack>  
