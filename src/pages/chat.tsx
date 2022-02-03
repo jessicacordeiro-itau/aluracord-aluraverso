@@ -16,12 +16,6 @@ export interface NewMessage {
     user: string
 }
 
-export interface DeleteMessage {
-    id: number
-    words: string
-    user: string
-}
-
 export default function Chat() {
     const router = useRouter();
     const user = router.query.username
