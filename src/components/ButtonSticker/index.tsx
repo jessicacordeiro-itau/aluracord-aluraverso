@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Text, Image, HStack } from "@chakra-ui/react";
+import { Box, Button, Text, Image } from "@chakra-ui/react";
 import appConfig from '../../../config.json'
 
 interface ButtonStickerProps {

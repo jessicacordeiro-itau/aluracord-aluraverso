@@ -1,12 +1,14 @@
 import React from "react";
 import { Box, Text, Image, HStack, propNames } from "@chakra-ui/react";
 import { NewMessage } from "../../pages/chat";
+import { CloseIcon } from "@chakra-ui/icons";
 
 interface MessageListProps {
     messages: NewMessage[]
+    onclick: () => number
 }
 
-export default function MessageList({ messages } : MessageListProps) {
+export default function MessageList({ messages, onclick } : MessageListProps) {
 
     return(
             <Box
@@ -55,23 +57,21 @@ export default function MessageList({ messages } : MessageListProps) {
                             </Text>
                         </HStack>
 
-                        {/*
-                        
-                        // tentando colocar o icone de deletar uma mensagem
-
+                        <Box position='relative'>
                         <CloseIcon
                             as='button'
-                            onClick={() => ''}
+                            value={message.id}
+                            onClick={() => onclick(message.id)}
                             color='#A44681'
                             w='15'
                             h='15'
                             cursor='pointer'
-                            bottom='50'
-                            position='relative'
+                            bottom='30'
+                            position='absolute'
                             left='98.5%'
 
                         />
-                        */}
+                        </Box>
 
                         {message.words.startsWith(':sticker:') ? (
                             <Image maxH='200' src={message.words.replace(':sticker: ', '')} alt='sticker' />

@@ -68,15 +68,14 @@ export default function Chat() {
         const response = await supabaseClient
             .from('messages')
             .delete()
-            .match(
-                { id: messageId }
-            )
+            .match({id: messageId})
             let newMessageList = messageList.filter((message) => {
                 if(message.id != messageId) {
-                    return message
+                   return message
                 }
             })
-        setMessageList([...newMessageList])
+
+            setMessageList([...newMessageList])
     }
 
     return(
@@ -95,7 +94,7 @@ export default function Chat() {
                 h='100%'
                 maxW='90%'
                 maxH='90vh'
-                p='32'
+                p='30'
             >
             <Header />
             <Box
@@ -110,6 +109,7 @@ export default function Chat() {
             >
                 <MessageList 
                     messages={messageList} 
+                    onclick={(messageId: number) => handleDeleteMessage(messageId)}
                 />
             </Box>
             <HStack>
@@ -123,7 +123,7 @@ export default function Chat() {
                 >
                     <Input 
                         placeholder="Insira sua mensagem aqui"
-                        w='100%'
+                        w='95%'
                         border='0'
                         resize='none'
                         borderRadius='50'
@@ -149,14 +149,14 @@ export default function Chat() {
                     />
                     <ButtonSticker 
                         onStickerClick={(sticker) => {
-                            console.log('foi porra', sticker)
                             handleNewMessage(`:sticker: ${sticker}`)
                         }}
                     />
                     <Button 
+                        display='block'
                         variant='solid'
                         h='55'
-                        w='3.8%'
+                        w='4%'
                         mt='5'
                         ml='3'
                         padding='10'

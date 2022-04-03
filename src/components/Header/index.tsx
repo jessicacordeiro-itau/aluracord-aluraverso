@@ -15,7 +15,7 @@ export default function Header() {
         >
             <Text 
                 textColor='#DFFFF4'
-                fontSize='24'
+                fontSize='20'
                 fontWeight='bold'
             >
                 Chat - AluraVerso
@@ -40,7 +40,7 @@ export default function Header() {
                }}
             >
                 Logout
-            </Button>       
+            </Button>    
         </Box>
     )
 }
